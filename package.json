@@ -15,12 +15,12 @@
     "mongoose-aggregate-paginate-v2": "^1.0.6",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
+    "validator": "^13.9.0",
     "xss-clean": "^0.1.1"
   },
   "name": "chordmart",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "start": "node server/server.js",
     "server": "nodemon server/server.js",
