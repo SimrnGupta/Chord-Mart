@@ -1,12 +1,28 @@
-const hello = async() => {
+const { User } = require('../models/user')
+
+const createUser = async(email, password) => {
     try {
-        return "hello"
+        if(User.emailTaken(email)) {
+            console.log("Email already exists")
+        }
+        // creates new instance in db
+        const user = new User({
+            email, 
+            password
+        })
+        await user.save();
+        return user; 
     }
     catch(error) {
-
+        throw error;
     }
 }
 
+const genAuthToken = (user) => {
+    const token = user.generateAuthToken();
+    return token;
+}
+
 module.exports = {
-    hello
+    createUser, genAuthToken
 }
