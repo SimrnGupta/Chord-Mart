@@ -6,6 +6,8 @@ const xss = require("xss-clean");
 const mongoSanitize = require("express-mongo-sanitize");
 const routes = require("./routes")
 require('dotenv').config()
+const httpStatus = require('http-status')
+const { handleError, convertToApiError } = require('./middleware/apiError')
 
 const mongoUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}?retryWrites=true&w=majority`;
 mongoose.connect(mongoUri)
@@ -18,6 +20,11 @@ app.use(mongoSanitize());
 // localhost: 3001/api
 app.use('/api', routes);
 
+//middleware to handle errors
+app.use(convertToApiError)
+app.use((err, req, res, next) => {
+    handleError(err, res)
+})
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

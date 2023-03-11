@@ -11,6 +11,7 @@ const authController = {
         }
         catch(error) {
             console.log(error)
+            next(error)
         }
     },
     async signin(req, res, next) {
