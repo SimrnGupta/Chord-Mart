@@ -1,4 +1,4 @@
-const { userService } = require('../services')
+const { userService, authService } = require('../services')
 const httpStatus = require('http-status')
 const { ApiError } = require('../middleware/apiError')
 
@@ -14,8 +14,27 @@ const userController = {
         } catch(err) {
             next(err)
         }
-    }
+    },
+    async updateProfile(req, res, next) {
+        try {
+            const user = await userService.updateUserProfile(req);
+            res.json(user)
+            
+        } catch(err) {
+            next(err)
+        }
+    },
+    async updateUserEmail(req, res, next) {
+        try {
+            const user = await userService.updateUserEmail(req);
+            const token = await authService.genAuthToken(user);
 
+            res.cookie('access-token', token).status(httpStatus.OK).send({user, token})            
+        } catch(err) {
+            next(err)
+        }
+    }
+ 
 }
 
 module.exports =  userController

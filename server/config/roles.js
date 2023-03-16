@@ -15,7 +15,7 @@ let grantsObject = {
         profile: {
             'read:own': ['*', '!password', '!_id'],
             'update:own': ['*'],
-        }
+        },
     }
 };
 const roles = new AccessControl(grantsObject);

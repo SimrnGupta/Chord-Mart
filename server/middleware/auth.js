@@ -15,6 +15,7 @@ const verify = (req, res, resolve, reject, rights) => async(err, user) => {
         const action = rights[0]; // createAny, readAny
         const resource = rights[1]; // dog, profile
         const permission = roles.can(req.user.role)[action](resource);
+        
         if(!permission.granted) {
             return reject(new ApiError(httpStatus.FORBIDDEN, "Sorry, you don't have the rights!"))
         }
